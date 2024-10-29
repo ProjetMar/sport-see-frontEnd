@@ -1,0 +1,22 @@
+.KeyData{
+    display: flex;
+    align-items: center;
+    background-color: #FBFBFB;
+    max-width: 258px;
+    border-radius: 5px;
+}
+.KeyData img{
+    width: 60px;
+    height: 60px;
+    margin: 32px;
+}
+.KeyData p {
+    margin: 0px;
+}
+.keyData__valeur{
+    font-size: 20px;
+    font-weight: bold;
+}
+.keyData__name{
+    font-size: 14px;
+}

@@ -1,0 +1,26 @@
+aside{
+    width: 117px;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Espace entre les icônes et le texte */
+    align-items: center;
+    height: 100vh; /* Prendre toute la hauteur */
+    padding-top: 256px;
+    padding-bottom: 59px;
+}
+.Nav__verticale{
+    list-style: none;
+    margin:0px;
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; 
+}
+aside p{
+    color: white;
+    transform: rotate(-90deg);
+    font-size: 12px;
+    margin-bottom: 60px;
+    white-space: nowrap;
+}

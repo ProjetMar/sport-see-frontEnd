@@ -1,0 +1,21 @@
+body{
+    margin: 0px;
+}
+.Main__home{
+    display: flex;
+}
+.Main__home section{
+    display: flex;
+    align-items: center;
+    margin: auto;
+    margin-top: 200px;
+    gap: 30px;
+}
+a{
+    text-decoration: none;
+    color: white;
+    background-color: black;
+    padding: 10px 50px;
+    font-size: 24px;
+    border-radius: 10px;
+}

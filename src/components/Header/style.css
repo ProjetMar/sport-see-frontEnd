@@ -1,0 +1,26 @@
+header{
+    background-color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 91px 12.07px 28px;
+}
+.logo{
+    max-width: 178px;
+    margin-right: 149px;
+}
+header nav{
+    width: 100%;
+}
+.Nav__horizontale{
+    list-style: none;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    margin: 0px;
+    padding: 0px;
+    font-size: 24px;
+}
+body{
+    font-family: "Roboto", sans-serif;;
+}
