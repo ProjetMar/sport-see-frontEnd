@@ -4,11 +4,17 @@
     background-color: #FBFBFB;
     max-width: 258px;
     border-radius: 5px;
+    @media screen and (max-width: 1400px){
+        width: 200px;
+    }
 }
 .KeyData img{
     width: 60px;
     height: 60px;
     margin: 32px;
+    @media screen and (max-width: 1400px){
+        margin: 20px;
+    }
 }
 .KeyData p {
     margin: 0px;

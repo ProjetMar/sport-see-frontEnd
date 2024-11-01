@@ -6,6 +6,10 @@
     margin-top: 68px;
     margin-left: 107px;
     /* margin-right: 90px; */
+    @media screen and (max-width: 1400px){
+        margin-left: 10px;
+        margin-right: 10px;
+    }
 }
 .Poid{
     height: 274px;
@@ -19,6 +23,10 @@
     display: grid;
     grid-template-columns: 3fr 1fr;
     gap: 30px;
+    @media screen and (max-width: 1400px){
+        display: flex;
+        flex-direction: column;
+    }
 }
 .contenu2__gauche{
     display: flex;
@@ -31,6 +39,12 @@
     display: flex;
     flex-direction: column;
     gap: 39px;
+    @media screen and (max-width: 1400px){
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
 }
 .SousPoid{
     height: 258px;

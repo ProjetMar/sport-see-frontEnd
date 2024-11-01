@@ -17,7 +17,7 @@ export default class Example extends PureComponent {
      const normalizedData = this.normalizeUserData(data);
     return (
       <div style={{backgroundColor:'#FBFBFB', width: '100%', position:'relative', borderRadius: 5}}>
-        <p style={{position:'absolute'}}>Score</p>
+        <p style={{position:'absolute', margin: '0px', top: '30px', left: '24px', fontSize: '15px', fontWeight: '500',color: '#20253A'}}>Score</p>
         <div style={{
           position: 'absolute',
           display:'flex',
@@ -40,7 +40,6 @@ export default class Example extends PureComponent {
             endAngle={90 + (normalizedData[0].score * 3.6)} data={normalizedData} >
             <RadialBar
               minAngle={15}
-              
               background={{ fill: '#FBFBFB' }}
               clockWise
               dataKey = "score"

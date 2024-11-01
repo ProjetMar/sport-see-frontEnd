@@ -1,18 +1,33 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent} from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 const daysOfWeek = ["L", "M", "M", "J", "V", "S", "D"];
 
 export default class Linechar extends PureComponent {
   static demoUrl = 'https://codesandbox.io/p/sandbox/line-chart-width-xaxis-padding-8v7952';
+  //ajoute de l'opacité apres la souris 
+  state = {
+    mouseX: null,
+  };
+
+  handleMouseMove = (e) => {
+    const chartRect = e.currentTarget.getBoundingClientRect();
+    this.setState({ mouseX: e.clientX - chartRect.left });
+  };
+
+  handleMouseLeave = () => {
+    this.setState({ mouseX: null });
+  };
 
   render() {
     //import le data
     const { data } = this.props;
+    const { mouseX } = this.state;
     return (
       <div style={{width: '100%',
         height: '100%',
-        borderRadius: '5px',  
-        overflow: 'hidden'  }}>
+        borderRadius: '5px',position:'relative',  
+        overflow: 'hidden'  }} onMouseMove={this.handleMouseMove}
+        onMouseLeave={this.handleMouseLeave}>
           <ResponsiveContainer width="100%" height="100%">
           <p style={{margin:'0px', position:'absolute',  color: '#FFFFFF', opacity: '0.52', width:'147px',
             fontSize:'15px', zIndex: '100', lineHeight:'24px', marginLeft:'34px', marginTop:'29px'}}>
@@ -34,7 +49,7 @@ export default class Linechar extends PureComponent {
                       <div className="custom-tooltip" style={{background: 'black', backgroundColor: 'white', 
                       padding: '0px 5px', 
                       color: 'white', fontSize: '8px', lineHeight :'24px', position: 'relative', 
-                      top: '-40px',   }}>
+                      top: '-40px'}}>
                           {payload.map((entry, index) => (
                           <p key={index} style={{ color: 'black'}}>
                               {`${entry.value}min`}
@@ -51,6 +66,22 @@ export default class Linechar extends PureComponent {
             activeDot={{ fill: 'white', stroke: 'rgba(255,0,0,0.6)',strokeWidth: 8 , r:8 }} />
           </LineChart>
         </ResponsiveContainer>  
+
+        {/* Overlay d’opacité dynamique */}
+        {mouseX !== null && (
+          <div 
+            style={{
+              position: 'absolute',
+              top: 0,
+              bottom: 0,
+              left: `${mouseX}px`,
+              right: 0,
+              backgroundColor: 'rgba(0, 0, 0, 0.2)',
+              zIndex:1,
+              pointerEvents: 'none', // Permet aux interactions de passer au travers
+            }}
+          />
+        )}
       </div>
     );
   }
