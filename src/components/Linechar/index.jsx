@@ -6,28 +6,28 @@ export default class Linechar extends PureComponent {
   static demoUrl = 'https://codesandbox.io/p/sandbox/line-chart-width-xaxis-padding-8v7952';
   //ajoute de l'opacité apres la souris 
   state = {
-    mouseX: null,
+    activeDotX: null,
   };
 
-  handleMouseMove = (e) => {
-    const chartRect = e.currentTarget.getBoundingClientRect();
-    this.setState({ mouseX: e.clientX - chartRect.left });
-  };
 
-  handleMouseLeave = () => {
-    this.setState({ mouseX: null });
+  handleTooltip = (props) => {
+    // Vérifiez si le tooltip est actif et mettez à jour la position de l'active dot
+    if (props && props.active && props.coordinate) {
+      this.setState({ activeDotX: props.coordinate.x });
+    } else {
+      this.setState({ activeDotX: null });
+    }
   };
 
   render() {
     //import le data
     const { data } = this.props;
-    const { mouseX } = this.state;
+    const { activeDotX } = this.state;
     return (
       <div style={{width: '100%',
         height: '100%',
         borderRadius: '5px',position:'relative',  
-        overflow: 'hidden'  }} onMouseMove={this.handleMouseMove}
-        onMouseLeave={this.handleMouseLeave}>
+        overflow: 'hidden'  }}>
           <ResponsiveContainer width="100%" height="100%">
           <p style={{margin:'0px', position:'absolute',  color: '#FFFFFF', opacity: '0.52', width:'147px',
             fontSize:'15px', zIndex: '100', lineHeight:'24px', marginLeft:'34px', marginTop:'29px'}}>
@@ -44,6 +44,7 @@ export default class Linechar extends PureComponent {
             padding={{ left: 10, right: 10 }} tick={{ fill: 'rgba(255,255,255,0.52)', fontSize: 12}} style={{backgroundColor: '#FF0000'}}/>
             <YAxis domain={['dataMin-20', "dataMax+20"]} hide={true}/>
             <Tooltip cursor={{color:'#C4C4C480'}}  content={({ payload, label, active, coordinate }) => {
+                  this.handleTooltip({ active, coordinate }); // Mettez à jour la position de l'active dot
                   if (active && payload && payload.length) {
                       return (
                       <div className="custom-tooltip" style={{background: 'black', backgroundColor: 'white', 
@@ -68,13 +69,13 @@ export default class Linechar extends PureComponent {
         </ResponsiveContainer>  
 
         {/* Overlay d’opacité dynamique */}
-        {mouseX !== null && (
+        {activeDotX !== null && (
           <div 
             style={{
               position: 'absolute',
               top: 0,
               bottom: 0,
-              left: `${mouseX}px`,
+              left: `${activeDotX}px`,
               right: 0,
               backgroundColor: 'rgba(0, 0, 0, 0.2)',
               zIndex:1,

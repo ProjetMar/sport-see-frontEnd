@@ -52,3 +52,10 @@
     grid-template-columns: 1fr 1fr 1fr;
     gap: 30px;  
 }
+.actionBtns{
+    position: absolute;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    right: 0%;
+}

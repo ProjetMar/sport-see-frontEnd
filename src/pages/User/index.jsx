@@ -5,6 +5,7 @@ import Aside from "../../components/Aside";
 // import{USER_ACTIVITY} from "../../data.js";
 // import {USER_AVERAGE_SESSIONS} from "../../data.js";
 // import{USER_PERFORMANCE} from "../../data.js";
+import Loader from "../../utils/Loader/Loader.jsx";
  import Bonjour from "../../components/Bonjour";
 import "./style.css"
 import Poids from "../../components/Poids/index.jsx";
@@ -17,6 +18,7 @@ import Linechar from "../../components/Linechar/index.jsx";
 import SimpleRadarChart from "../../components/SimpleRadarChart/index.jsx";
 import SimpleRadialBarChart from "../../components/SimpleRadialBarChart/index.jsx";
 import { useState, useEffect } from "react";
+// import exportFromJSON from 'export-from-json';
 
 function User(){
     const {id} = useParams()
@@ -90,15 +92,140 @@ function User(){
       }
       fectchPerformance()
     },[id])
-    if (isDataLoading) {
-      return <div>Chargement...</div>; // Affiche un message de chargement
+
+    const downloadFile = ({ data, fileName, fileType }) => {
+      // Create a blob with the data we want to download as a file
+      const blob = new Blob([data], { type: fileType })
+      // Create an anchor element and dispatch a click event on it
+      // to trigger a download
+      const a = document.createElement('a')
+      a.download = fileName
+      a.href = window.URL.createObjectURL(blob)
+      const clickEvt = new MouseEvent('click', {
+        view: window,
+        bubbles: true,
+        cancelable: true,
+      })
+      a.dispatchEvent(clickEvt)
+      a.remove()
     }
+    const exportToJson = e => {
+      e.preventDefault()
+      downloadFile({
+        data: JSON.stringify(userActivites),
+        fileName: 'users.json',
+        fileType: 'text/json',
+      })
+    }
+    const exportToCsv = e => {
+      e.preventDefault();
+
+      // En-têtes pour chaque colonne
+      const headers = ['UserId,Day,Kilogram,Calories'];
+    
+      // Accéder directement à `userActivites`
+      const { userId, sessions } = userActivites;
+    
+      // Créer les lignes de données pour le CSV
+      const usersCsv = sessions.map((session) => {
+        const { day, kilogram, calories } = session;
+        return [userId, day, kilogram, calories].join(',');
+      });
+     
+      downloadFile({
+        data: [...headers, ...usersCsv].join('\n'),
+        fileName: 'users.csv',
+        fileType: 'text/csv',
+      })
+    }
+    const exportToCsvUser = e => {
+      e.preventDefault();
+
+      // En-têtes pour chaque colonne
+      const headers = ['UserId,TodayScore'];
+      const { id } = user;
+      const score = user.todayScore === undefined ? user.score : user.todayScore;
+      
+      const usersCsv = [id, score*100].join(',');
+      downloadFile({
+        data: [...headers, usersCsv].join('\n'),
+        fileName: 'usersScore.csv',
+        fileType: 'text/csv',
+      });
+    }
+    const exportToCsvAverage = e => {
+      e.preventDefault();
+
+      // En-têtes pour chaque colonne
+      const headers = ['UserId,Day,SessionLength'];
+    
+      // Accéder directement à `userActivites`
+      const { userId, sessions } = userAverageSessions;
+    
+      // Créer les lignes de données pour le CSV
+      const usersCsv = sessions.map((session) => {
+        const { day, sessionLength} = session;
+        return [userId, day, sessionLength].join(',');
+      });
+     
+      downloadFile({
+        data: [...headers, ...usersCsv].join('\n'),
+        fileName: 'usersAvreage.csv',
+        fileType: 'text/csv',
+      })
+    }
+    const exportToCsvPerformance = e => {
+      e.preventDefault();
+
+      // En-têtes pour chaque colonne
+      const headers = ['UserId,kind,value'];
+    
+      // Accéder directement à `userActivites`
+      const { userId, kind, data } = userPerformance;
+    
+      // Créer les lignes de données pour le CSV
+      const usersCsv = data.map((val) => {
+        const activityType = kind[val.kind]; // Traduire le numéro en nom de type
+        return [userId, activityType, val.value].join(',');
+      });
+     
+      downloadFile({
+        data: [...headers, ...usersCsv].join('\n'),
+        fileName: 'usersPerformance.csv',
+        fileType: 'text/csv',
+      })
+    }
+    const exportToCsvKeyData = e => {
+      e.preventDefault();
+
+      // En-têtes pour chaque colonne
+      const headers = ['UserId,calorie,protein,carbohydrate,lipid'];
+    
+      // Accéder directement à `userActivites`
+      const { id, keyData} = user;
+    
+      // Créer les lignes de données pour le CSV
+      const usersCsv = [id, keyData["calorieCount"], keyData["proteinCount"],keyData["carbohydrateCount"],keyData["lipidCount"]].join(',');
+      
+     
+      downloadFile({
+        data: [...headers,usersCsv].join('\n'),
+        fileName: 'usersKeyData.csv',
+        fileType: 'text/csv',
+      })
+    }
+    // const exportNpmCsv=()=>{
+    //   const fileName = 'download'
+    //  const exportType =  exportFromJSON.types.csv
+    //  exportFromJSON({ userAverageSessions, fileName, exportType })
+    // }
     console.log(user)
     const { calorieCount= 0, proteinCount= 0, carbohydrateCount =0, lipidCount=0 } = keyData;
     console.log({ calorieCount, proteinCount, carbohydrateCount, lipidCount })
-      
     return(
-      <>
+      
+      <>{isDataLoading ? (<Loader/>) : (
+        <>
           <Header/>
           <main className="Main__user">
               <Aside/>
@@ -139,8 +266,30 @@ function User(){
                   </div>
                 </section>
               </div>
-              
+              <div className='actionBtns'>
+                <button type='button' onClick={exportToJson}>
+                  Export to JSON
+                 </button>
+                 <button type='button' onClick={exportToCsv}>
+                    Export to CSV Activité quotidienne
+                 </button>
+                 <button type='button' onClick={exportToCsvUser}>
+                    Export to CSV Score
+                 </button>
+                 <button type='button' onClick={exportToCsvAverage}>
+                    Export to CSV Average
+                 </button>
+                 <button type='button' onClick={exportToCsvPerformance}>
+                    Export to CSV Performance
+                 </button>
+                 <button type='button' onClick={exportToCsvKeyData}>
+                    Export to CSV KeyData
+                 </button>
+                 {/* <button onClick={exportNpmCsv}>eport csv npm</button> */}
+              </div>
           </main>
+          </>
+          )}
           </>
       )
     
