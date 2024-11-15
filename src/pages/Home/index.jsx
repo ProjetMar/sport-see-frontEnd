@@ -19,23 +19,8 @@ function Home() {
           }
       }
       loadData();
+       // eslint-disable-next-line
   }, []);
-  useEffect(()=>{
-    async function fectchUsers(){
-      try {
-        const response = await fetch('http://localhost:4000/users')
-        const usersData = await response.json()
-        console.log(usersData.data)
-        setUsers(usersData.data);
-        console.log(users)
-      } catch(err) {
-        console.log(err)
-      } finally {
-      }
-    }
-    fectchUsers()
-    // eslint-disable-next-line
-  },[])
 
   return (
     <>
