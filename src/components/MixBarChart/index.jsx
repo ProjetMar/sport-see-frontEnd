@@ -2,7 +2,7 @@
 import React, { PureComponent } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import "./style.css"
-export default class Poids extends PureComponent {
+export default class MixBarChart extends PureComponent {
     static demoUrl = 'https://codesandbox.io/p/sandbox/bar-chart-with-double-yaxis-39dhps';
 
   render() {

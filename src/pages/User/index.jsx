@@ -4,7 +4,7 @@ import Aside from "../../components/Aside";
 import Loader from "../../utils/Loader/Loader.jsx";
 import Bonjour from "../../components/Bonjour";
 import "./style.css"
-import Poids from "../../components/Poids/index.jsx";
+import MixBarChart from "../../components/MixBarChart/index.jsx";
 import KeyData from "../../components/KeyData/idex.jsx";
 import iconKcal from"../../assets/calories-icon.png";
 import iconProt from"../../assets/protein-icon.png" ;
@@ -70,7 +70,7 @@ function User(){
                 <section className="contenu2">
                   <div className="contenu2__gauche">
                       <div className="Poid">
-                        <Poids data={userActivites.sessions}/>
+                        <MixBarChart data={userActivites.sessions}/>
                       </div>
                       <div className="SousPoid">
                           <Linechar data={userAverageSessions.sessions}/>
