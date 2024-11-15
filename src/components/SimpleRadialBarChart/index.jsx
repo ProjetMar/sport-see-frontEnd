@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { RadialBarChart, RadialBar, Legend, ResponsiveContainer } from 'recharts';
-
+import './style.css'
 
 export default class Example extends PureComponent {
   normalizeUserData = (data) => {
@@ -16,24 +16,11 @@ export default class Example extends PureComponent {
      // Normaliser la donnée pour avoir une clé "score"
      const normalizedData = this.normalizeUserData(data);
     return (
-      <div style={{backgroundColor:'#FBFBFB', width: '100%', position:'relative', borderRadius: 5}}>
-        <p style={{position:'absolute', margin: '0px', top: '30px', left: '24px', fontSize: '15px', fontWeight: '500',color: '#20253A'}}>Score</p>
-        <div style={{
-          position: 'absolute',
-          display:'flex',
-          flexDirection:'column',
-          justifyContent:'center',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',// Centrer le texte
-          backgroundColor: '#FFFFFF',  // Couleur de fond circulaire
-          borderRadius: '50%',          // Forme circulaire
-          width:'165px',
-          height:'165px',   // Espacement autour du texte
-          textAlign: 'center',          // Centrer le texte
-        }}>
-          <p style={{ margin: 0, fontWeight: '700', fontSize:'26px' }}>{normalizedData[0].score}%</p> 
-          <p style={{color:"#74798C", fontSize:'16px', fontWeight:'500'}}>de votre<br />objectif</p>
+      <div className="conteneur-radar">
+        <p className='conteneur-radar-titre'>Score</p>
+        <div className='conteneur-radar-text'>
+          <p className='conteneur-radar-text-one'>{normalizedData[0].score}%</p> 
+          <p className='conteneur-radar-text-two'>de votre<br />objectif</p>
         </div>
         <ResponsiveContainer width="100%" height="100%" >
           <RadialBarChart cx="50%" cy="50%" innerRadius="70%" outerRadius="80%" barSize={10}  startAngle={90}    // Point de départ à 90°

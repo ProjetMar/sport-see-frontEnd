@@ -1,6 +1,7 @@
+
 import React, { PureComponent } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-
+import "./style.css"
 export default class Poids extends PureComponent {
     static demoUrl = 'https://codesandbox.io/p/sandbox/bar-chart-with-double-yaxis-39dhps';
 
@@ -13,10 +14,10 @@ export default class Poids extends PureComponent {
     const CustomLegend = (props) => {
       const { payload } = props;
       return (
-        <ul style={{ display: 'flex', listStyleType: 'none', padding: 0, justifyContent: 'flex-end', marginBottom:64.5, marginTop: 0 }}>
+        <ul className='legend'>
           {payload.map((entry, index) => (
-            <li key={`item-${index}`} style={{ marginRight: 32, color: '#74798C', fontSize:14, fontWeight:500 }}> {/* Change la couleur ici */}
-              <span style={{ color: entry.color, width: 8, height: 8, marginRight: 7 }}>⬤</span> {/* Cercle de la même couleur que la barre */}
+            <li className='legend-element' key={`item-${index}`}> {/* Change la couleur ici */}
+              <span className='legend-point' style={{ color: entry.color }}>⬤</span> {/* Cercle de la même couleur que la barre */}
               {entry.value}
             </li>
           ))}
@@ -25,7 +26,7 @@ export default class Poids extends PureComponent {
     };
     return (
       <ResponsiveContainer width="100%" height="100%">
-        <p style={{ margin: '0px', position:'absolute',zIndex: 100,  fontSize: 15, color: '#20253A', fontWeight: 500 }}>Activité quotidienne</p>
+        <p className='titre-poid'>Activité quotidienne</p>
         <BarChart
           // width={600}
           // height={300}
@@ -45,11 +46,7 @@ export default class Poids extends PureComponent {
           <Tooltip cursor={{color:'#C4C4C480'}} position={{ y: 0 }} content={({ payload, label, active }) => {
                 if (active && payload && payload.length) {
                     return (
-                    <div className="custom-tooltip" style={{ backgroundColor: '#E60000', 
-                    padding: '5px 12px', 
-                    color: 'white', 
-                    marginLeft: '47px', marginRight: '47px',
-                    marginBottom: '20px', fontSize: '7px', lineHeight :'24px' }}>
+                    <div className="custom-tooltip-poid">
                         {payload.map((entry, index) => (
                         <p key={index} style={{ color: 'white'}}>
                             {`${entry.value}${index===1 ? 'kCal' : 'g' }`}

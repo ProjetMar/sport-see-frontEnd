@@ -1,5 +1,6 @@
 import React, { PureComponent} from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import './style.css'
 const daysOfWeek = ["L", "M", "M", "J", "V", "S", "D"];
 
 export default class Linechar extends PureComponent {
@@ -8,9 +9,9 @@ export default class Linechar extends PureComponent {
   state = {
     activeDotX: null,
   };
-
-
+  
   handleTooltip = (props) => {
+    
     // Vérifiez si le tooltip est actif et mettez à jour la position de l'active dot
     if (props && props.active && props.coordinate) {
       this.setState({ activeDotX: props.coordinate.x });
@@ -29,8 +30,7 @@ export default class Linechar extends PureComponent {
         borderRadius: '5px',position:'relative',  
         overflow: 'hidden'  }}>
           <ResponsiveContainer width="100%" height="100%">
-          <p style={{margin:'0px', position:'absolute',  color: '#FFFFFF', opacity: '0.52', width:'147px',
-            fontSize:'15px', zIndex: '100', lineHeight:'24px', marginLeft:'34px', marginTop:'29px'}}>
+          <p className='titre'>
               Durée moyenne des sessions
           </p>
           <LineChart
@@ -47,10 +47,7 @@ export default class Linechar extends PureComponent {
                   this.handleTooltip({ active, coordinate }); // Mettez à jour la position de l'active dot
                   if (active && payload && payload.length) {
                       return (
-                      <div className="custom-tooltip" style={{background: 'black', backgroundColor: 'white', 
-                      padding: '0px 5px', 
-                      color: 'white', fontSize: '8px', lineHeight :'24px', position: 'relative', 
-                      top: '-40px'}}>
+                      <div className="custom-tooltip">
                           {payload.map((entry, index) => (
                           <p key={index} style={{ color: 'black'}}>
                               {`${entry.value}min`}
@@ -70,17 +67,8 @@ export default class Linechar extends PureComponent {
 
         {/* Overlay d’opacité dynamique */}
         {activeDotX !== null && (
-          <div 
-            style={{
-              position: 'absolute',
-              top: 0,
-              bottom: 0,
-              left: `${activeDotX}px`,
-              right: 0,
-              backgroundColor: 'rgba(0, 0, 0, 0.2)',
-              zIndex:1,
-              pointerEvents: 'none', // Permet aux interactions de passer au travers
-            }}
+          <div className='activeDotX'
+            style={{left: `${activeDotX}px`}}
           />
         )}
       </div>

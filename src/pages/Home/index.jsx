@@ -1,12 +1,25 @@
 import Header from "../../components/Header"
 import Aside from "../../components/Aside";
 import UserName from "../../components/UserName";
+import {fetchUsers } from "../../services/homeService.js";
 // import {USER_MAIN_DATA} from "../../data.js";
 import './style.css';
 import { useState, useEffect } from "react";
 function Home() {
   const [users, setUsers] = useState([]);
   // const [usersData, setUsersData]=useState([]);
+  useEffect(() => {
+    async function loadData() {
+        try {
+            const usersData = await fetchUsers();
+            setUsers(usersData);
+          } catch (err) {
+              console.error(err);
+          } finally {
+          }
+      }
+      loadData();
+  }, []);
   useEffect(()=>{
     async function fectchUsers(){
       try {
@@ -23,26 +36,7 @@ function Home() {
     fectchUsers()
     // eslint-disable-next-line
   },[])
-  // useEffect(() => {
-  //   async function fetchAllUsersData() {
-  //     try {
-  //       const allUsersData = await Promise.all(
-  //         users.map(async (userId) => {
-  //           const response = await fetch(`http://localhost:4000/user/${userId}`);
-  //           const userData = await response.json();
-  //           return userData.data; // Par exemple, les données complètes pour chaque utilisateur
-  //         })
-  //       );
-  //       setUsersData(allUsersData); // Stocker toutes les données récupérées
-  //     } catch (err) {
-  //       console.log("Erreur de récupération des données des utilisateurs:", err);
-  //     }
-  //   }
 
-  //   if (users.length > 0) {
-  //     fetchAllUsersData();
-  //   }
-  // }, [users]);
   return (
     <>
     <Header/>
@@ -57,12 +51,6 @@ function Home() {
         ))}
       </section> */}
       <section>
-        {/* {users[0].map((user)=>(
-            <UserName key={user.id}
-                  id={user.id}
-                  name={user.userInfos.firstName}
-            />
-        ))} */}
         {users.map((user) => (
           <UserName key={user[0].id}
           id={user[0].id}

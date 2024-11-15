@@ -1,0 +1,31 @@
+.titre{
+    margin: 0px ;
+    position: absolute; 
+    color: #FFFFFF;
+    opacity: 0.52;
+    width: 147px;
+    font-size: 15px;
+    z-index: 100;
+    line-height: 24px;
+    margin-left: 34px; 
+    margin-top: 29px;
+}
+.custom-tooltip{
+    background: black;
+    background-color: white;
+    padding: 0px 5px;
+    color: white;
+    font-size: 8px; 
+    line-height: 24px;
+    position: relative; 
+    top: 40px;
+}
+.activeDotX{
+    position: absolute;             
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    pointer-events: 'none';  /*Permet aux interactions de passer au travers */
+}
